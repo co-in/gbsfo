@@ -1,0 +1,8 @@
+.idea
+#*.pb.gw.go
+#*.pb.go
+#api/swagger/*/*.swagger.json
+#bin/*
+
+#scripts/protoc/linux-x86_64/*
+!scripts/protoc/linux-x86_64/protoc-gen

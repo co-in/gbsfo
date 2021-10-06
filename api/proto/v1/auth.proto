@@ -1,0 +1,53 @@
+syntax = "proto3";
+package v1;
+option go_package = "api/v1;v1";
+
+import "google/api/annotations.proto";
+
+service Auth {
+  rpc signUp (SignUpRequest) returns (SignUpResponse){
+    option (google.api.http) = {
+      post: "/v1/auth/sign-up"
+      body: "*"
+    };
+  };
+  rpc login (LoginRequest) returns (LoginResponse){
+    option (google.api.http) = {
+      post: "/v1/auth/login"
+      body: "*"
+    };
+  };
+  rpc checkJWTToken (CheckJwtTokenRequest) returns (CheckJwtTokenResponse){
+    option (google.api.http) = {
+      post: "/v1/auth/check"
+      body: "*"
+    };
+  };
+}
+
+message CheckJwtTokenRequest {
+  string token = 1;
+  string token2 = 2;
+}
+
+message CheckJwtTokenResponse {
+  bool success = 1;
+}
+
+message SignUpRequest {
+  string login = 1;
+  string pass = 2;
+}
+
+message SignUpResponse {
+  string token = 1;
+}
+
+message LoginRequest {
+  string login = 1;
+  string pass = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DIR=$(dirname $(readlink -f "${0}"))
+
+#rm -rf ${DIR}/../../../bin
+rm -rf ${DIR}/../../../pkg/api/v1
+rm -rf ${DIR}/../../../api/swagger/v1
+
+#mkdir -p ${DIR}/../../../bin
+mkdir -p ${DIR}/../../../api/swagger/v1
+
+PATH=$PATH:${DIR}
+PROTOC_PREFIX="protoc --proto_path=api/proto/v1 --proto_path=third_party"
+PROTOC_SUFFIX="./api/proto/v1/*.proto"
+
+${PROTOC_PREFIX} --go_out=plugins=grpc:pkg ${PROTOC_SUFFIX}
+${PROTOC_PREFIX} --grpc-gateway_out=logtostderr=true:pkg ${PROTOC_SUFFIX}
+${PROTOC_PREFIX} --swagger_out=logtostderr=true:api/swagger/v1 ${PROTOC_SUFFIX}
